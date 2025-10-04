@@ -1,0 +1,30 @@
+{
+  "name": "banyan-erp",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Banyan ERP System - A full-stack React + NestJS application",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "dev:web": "turbo dev --filter=web",
+    "dev:backend": "turbo start:dev --filter=backend",
+    "start:backend": "turbo start --filter=backend",
+    "lint": "turbo lint",
+    "format": "biome format --write .",
+    "check": "biome check --apply .",
+    "type-check": "turbo type-check"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.4.1",
+    "turbo": "^1.10.16",
+    "typescript": "^5.0.4"
+  },
+  "packageManager": "pnpm@8.15.0",
+  "engines": {
+    "node": ">=18.12.0"
+  }
+}

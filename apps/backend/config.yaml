@@ -1,0 +1,36 @@
+# 榕树ERP系统 - 后端配置文件
+# Banyan ERP System - Backend Configuration
+
+# 数据库配置
+database:
+  type: mysql
+  host: localhost
+  port: 3306
+  username: root
+  password: "123456"
+  database: banyan
+  synchronize: true
+  logging: true
+  entities:
+    - "dist/**/*.entity{.ts,.js}"
+  migrations:
+    - "dist/migrations/*{.ts,.js}"
+  subscribers:
+    - "dist/subscriber/*{.ts,.js}"
+
+# 服务器配置
+server:
+  port: 3001
+  cors:
+    origin: "http://localhost:3000"
+    credentials: true
+
+# JWT配置
+jwt:
+  secret: "banyan_erp_jwt_secret_key_2024"
+  expiresIn: "24h"
+
+# 日志配置
+logging:
+  level: "debug"
+  format: "combined"
