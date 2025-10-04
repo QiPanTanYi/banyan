@@ -72,7 +72,7 @@ export class ConfigService {
         password: '123456',
         database: 'banyan',
         synchronize: true,
-        logging: true,
+        logging: false,
         entities: ['dist/**/*.entity{.ts,.js}'],
         migrations: ['dist/migrations/*{.ts,.js}'],
         subscribers: ['dist/subscribers/*{.ts,.js}'],

@@ -1,10 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule as NestConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { APP_GUARD } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from './config/config.module';
 import { ConfigService } from './config/config.service';
+import { AuthModule } from './auth/auth.module';
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
 
 @Module({
   imports: [
@@ -21,7 +24,7 @@ import { ConfigService } from './config/config.service';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => {
-        console.log('Database config:', configService.database);
+        // console.log('Database config:', configService.database);
         return {
           type: configService.database.type as any,
           host: configService.database.host,
@@ -36,8 +39,18 @@ import { ConfigService } from './config/config.service';
       },
       inject: [ConfigService],
     }),
+    
+    // 认证模块
+    AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    // 全局JWT守卫
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ],
 })
 export class AppModule {}

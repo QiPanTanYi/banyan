@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from './config/config.service';
+import { HttpExceptionFilter } from './filters/http-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -15,6 +16,9 @@ async function bootstrap() {
     whitelist: true,
     forbidNonWhitelisted: true,
   }));
+
+  // 启用全局异常过滤器
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   // 配置CORS跨域支持 - 使用YAML配置
   app.enableCors({

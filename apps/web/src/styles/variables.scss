@@ -1,0 +1,54 @@
+// Color Variables
+$primary-color: #1890ff;
+$primary-hover: #40a9ff;
+$primary-active: #096dd9;
+
+$success-color: #52c41a;
+$success-hover: #73d13d;
+$success-active: #389e0d;
+
+$warning-color: #faad14;
+$error-color: #ff4d4f;
+$info-color: #1890ff;
+
+// Text Colors
+$text-primary: #262626;
+$text-secondary: #595959;
+$text-disabled: #bfbfbf;
+
+// Background Colors
+$bg-primary: #ffffff;
+$bg-secondary: #fafafa;
+$bg-disabled: #f5f5f5;
+
+// Border Colors
+$border-color: #d9d9d9;
+$border-light: #f0f0f0;
+
+// Spacing
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+
+// Border Radius
+$border-radius-sm: 4px;
+$border-radius-md: 6px;
+$border-radius-lg: 8px;
+
+// Font Sizes
+$font-size-sm: 12px;
+$font-size-md: 14px;
+$font-size-lg: 16px;
+$font-size-xl: 18px;
+
+// Shadows
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+$shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+// Z-index
+$z-dropdown: 1000;
+$z-modal: 1050;
+$z-tooltip: 1100;
