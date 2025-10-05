@@ -1,17 +1,21 @@
 # 榕树ERP系统 (Banyan ERP System)
 
-一个基于现代全栈技术构建的通用ERP系统，采用Monorepo架构，支持模块化开发和部署。
+一个基于现代全栈技术构建的通用ERP系统，采用Monorepo架构，支持模块化开发和部署。系统包含完整的用户认证体系、现代化UI界面和可扩展的后端架构。
 
 ## 🌟 项目特点
 
 - 🚀 **现代化技术栈**: React 18 + NestJS + TypeScript + Vite
-- 🎯 **路由管理**: React Router DOM 实现单页应用导航
+- 🔐 **完整认证系统**: JWT认证、用户注册/登录、个人资料管理
+- 🛡️ **路由保护**: 基于认证状态的路由守卫和权限控制
+- 🎨 **现代化UI**: Tailwind CSS + SCSS 构建响应式界面
 - 🗄️ **数据库支持**: TypeORM + MySQL 数据持久化
 - 🌐 **跨域支持**: 内置CORS配置，支持前后端分离
 - 📦 **Monorepo架构**: 使用 Turborepo 管理多包项目
 - 🔧 **代码质量**: Biome 提供代码格式化和静态检查
 - ⚡ **快速开发**: Vite 提供极速的开发体验
 - 📋 **包管理**: pnpm workspace 高效管理依赖
+- 🎯 **状态管理**: Zustand 轻量级状态管理
+- 🌐 **HTTP客户端**: Axios 处理API请求
 
 ## 🚀 快速开始
 
@@ -102,23 +106,39 @@ banyan/
 ├── apps/                    # 应用目录
 │   ├── web/                # 前端Web应用
 │   │   ├── src/            # 源代码
-│   │   │   ├── pages/      # 页面组件
+│   │   │   ├── components/ # 组件目录
+│   │   │   │   ├── auth/   # 认证相关组件
+│   │   │   │   ├── layout/ # 布局组件
+│   │   │   │   └── ui/     # UI基础组件
+│   │   │   ├── pages/      # 页面组件 (Dashboard, Login, Register, Profile)
+│   │   │   ├── services/   # API服务层
+│   │   │   ├── stores/     # Zustand状态管理
+│   │   │   ├── types/      # TypeScript类型定义
+│   │   │   ├── utils/      # 工具函数
+│   │   │   ├── styles/     # SCSS样式文件
+│   │   │   ├── router/     # 路由配置
 │   │   │   ├── App.tsx     # 主应用组件
 │   │   │   └── main.tsx    # 应用入口
 │   │   ├── index.html      # HTML模板
 │   │   ├── package.json    # 应用依赖配置
 │   │   ├── vite.config.ts  # Vite配置
+│   │   ├── tailwind.config.js # Tailwind CSS配置
 │   │   └── tsconfig.json   # TypeScript配置
 │   └── backend/            # NestJS后端应用
 │       ├── src/            # 源代码
+│       │   ├── auth/       # 认证模块
+│       │   ├── user/       # 用户模块
+│       │   ├── config/     # 配置服务
 │       │   ├── app.module.ts    # 应用模块
 │       │   ├── app.controller.ts # 应用控制器
 │       │   ├── app.service.ts   # 应用服务
 │       │   └── main.ts     # 应用入口
 │       ├── .env.example    # 环境变量示例
+│       ├── config.yaml     # 应用配置文件
 │       ├── package.json    # 后端依赖配置
 │       ├── tsconfig.json   # TypeScript配置
 │       └── nest-cli.json   # NestJS CLI配置
+├── sql/                    # 数据库脚本
 ├── packages/               # 共享包目录
 ├── .turbo/                 # Turborepo缓存
 ├── biome.json             # Biome配置
@@ -132,20 +152,29 @@ banyan/
 
 ### 前端技术
 - **前端框架**: React 18.2.0
-- **路由**: React Router DOM 6.8.1
+- **路由**: React Router DOM 6.30.1
+- **状态管理**: Zustand 4.4.0
+- **HTTP客户端**: Axios 1.6.0
+- **UI框架**: Tailwind CSS 3.3.0
+- **样式预处理**: SCSS (Sass 1.69.0)
+- **工具库**: clsx 2.1.1, tailwind-merge 3.3.1
 - **构建工具**: Vite 4.2.0
 - **语言**: TypeScript 5.0.4
 
 ### 后端技术
 - **后端框架**: NestJS 9.4.3
+- **认证**: JWT (@nestjs/jwt 11.0.0, Passport)
+- **密码加密**: bcrypt 6.0.0
 - **数据库ORM**: TypeORM 0.3.17
-- **数据库**: MySQL 8.0+
-- **验证**: class-validator + class-transformer
+- **数据库**: MySQL 8.0+ (mysql2 3.6.0)
+- **验证**: class-validator 0.14.2 + class-transformer 0.5.1
+- **配置管理**: @nestjs/config 2.3.4 + js-yaml 4.1.0
 
 ### 开发工具
 - **代码质量**: Biome 1.4.1
 - **Monorepo**: Turborepo 1.10.16
 - **包管理**: pnpm 8.15.0
+- **测试框架**: Jest 29.5.0
 
 ## 📋 可用脚本
 
@@ -180,12 +209,39 @@ banyan/
 - pnpm >= 8.15.0
 - MySQL >= 8.0 (用于数据存储)
 
+## 🔐 认证系统
+
+系统内置完整的用户认证功能：
+
+### 功能特性
+- **用户注册**: 支持邮箱注册，密码加密存储
+- **用户登录**: JWT Token认证，支持记住登录状态
+- **个人资料**: 用户信息管理和编辑
+- **路由保护**: 基于认证状态的页面访问控制
+- **自动登录**: Token自动续期和状态持久化
+
+### 可用页面
+- **登录页面** (`/login`): 用户登录界面
+- **注册页面** (`/register`): 新用户注册界面
+- **仪表盘** (`/dashboard`): 主要工作台 (需要登录)
+- **个人中心** (`/profile`): 用户资料管理 (需要登录)
+
+### API端点
+- `POST /api/auth/register` - 用户注册
+- `POST /api/auth/login` - 用户登录
+- `GET /api/auth/profile` - 获取用户信息
+- `POST /api/auth/logout` - 用户登出
+
 ## 📝 开发指南
 
 1. **添加新页面**: 在 `apps/web/src/pages/` 目录下创建新的页面组件
-2. **路由配置**: 在 `apps/web/src/App.tsx` 中添加新的路由规则
-3. **共享组件**: 可在 `packages/` 目录下创建共享的组件库
-4. **代码规范**: 项目使用 Biome 进行代码格式化，请在提交前运行 `pnpm check`
+2. **路由配置**: 在 `apps/web/src/router/index.tsx` 中添加新的路由规则
+3. **认证保护**: 使用 `ProtectedRoute` 组件包装需要登录的页面
+4. **状态管理**: 使用 `useAuthStore` Hook 管理用户认证状态
+5. **API调用**: 使用 `authService` 处理认证相关的API请求
+6. **样式开发**: 使用 Tailwind CSS 类名 + SCSS 变量进行样式开发
+7. **共享组件**: 在 `apps/web/src/components/ui/` 目录下创建可复用组件
+8. **代码规范**: 项目使用 Biome 进行代码格式化，请在提交前运行 `pnpm check`
 
 ## 🤝 贡献指南
 
