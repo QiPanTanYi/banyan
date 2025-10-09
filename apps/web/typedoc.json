@@ -1,0 +1,40 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["./src"],
+  "entryPointStrategy": "expand",
+  "out": "./docs",
+  "theme": "default",
+  "name": "Web App Documentation",
+  "includeVersion": true,
+  "excludeExternals": true,
+  "excludePrivate": false,
+  "excludeProtected": false,
+  "excludeInternal": false,
+  "readme": "none",
+  "plugin": [],
+  "tsconfig": "./tsconfig.json",
+  "exclude": [
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/build/**",
+    "./src/router/index.tsx"
+  ],
+  "validation": {
+    "notExported": true,
+    "invalidLink": true,
+    "notDocumented": false
+  },
+  "categorizeByGroup": false,
+  "defaultCategory": "Other",
+  "categoryOrder": [
+    "Components",
+    "Hooks",
+    "Utils",
+    "Types",
+    "*"
+  ]
+}

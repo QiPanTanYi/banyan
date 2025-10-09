@@ -1,10 +1,10 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { createBrowserRouter, Navigate, type RouteObject } from 'react-router-dom';
 import { Layout } from '../components/layout/Layout';
 import { Login } from '../pages/Login';
 import { Register } from '../pages/Register';
 import { Dashboard } from '../pages/Dashboard';
 
-export const router = createBrowserRouter([
+const routes: RouteObject[] = [
   {
     path: '/',
     element: <Navigate to="/dashboard" replace />,
@@ -27,4 +27,6 @@ export const router = createBrowserRouter([
       },
     ],
   },
-]);
+];
+
+export const router: ReturnType<typeof createBrowserRouter> = createBrowserRouter(routes);

@@ -1,0 +1,105 @@
+/* 中文文档自定义样式 */
+
+/* 设置中文字体 */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+}
+
+/* 标题字体优化 */
+h1, h2, h3, h4, h5, h6 {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  font-weight: 600;
+}
+
+/* 代码块字体 */
+code, pre {
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+}
+
+/* 导航栏样式 */
+.tsd-navigation {
+  font-size: 14px;
+}
+
+.tsd-navigation a {
+  color: #333;
+  text-decoration: none;
+}
+
+.tsd-navigation a:hover {
+  color: #007acc;
+}
+
+/* 搜索框样式 */
+.tsd-search input {
+  font-family: inherit;
+}
+
+/* 表格样式 */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+}
+
+/* 代码示例样式 */
+.tsd-example {
+  background-color: #f8f9fa;
+  border-left: 4px solid #007acc;
+  padding: 16px;
+  margin: 16px 0;
+}
+
+/* 警告和提示样式 */
+.tsd-comment-tag {
+  background-color: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin: 8px 0;
+}
+
+.tsd-comment-tag.tsd-tag-param {
+  background-color: #e3f2fd;
+  border-color: #90caf9;
+}
+
+.tsd-comment-tag.tsd-tag-returns {
+  background-color: #e8f5e8;
+  border-color: #81c784;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+  
+  .tsd-navigation {
+    font-size: 13px;
+  }
+}
+
+/* 打印样式 */
+@media print {
+  .tsd-navigation,
+  .tsd-search {
+    display: none;
+  }
+  
+  body {
+    font-size: 12pt;
+    line-height: 1.4;
+  }
+}

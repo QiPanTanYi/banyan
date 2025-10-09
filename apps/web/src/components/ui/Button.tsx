@@ -1,12 +1,87 @@
 import React from 'react';
 import { cn } from '../../utils/cn';
 
+/**
+ * Button组件的属性接口
+ * @public
+ */
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  /**
+   * 按钮的视觉样式变体
+   * @defaultValue 'default'
+   * @remarks
+   * - `default`: 主要按钮样式，蓝色背景
+   * - `destructive`: 危险操作按钮，红色背景
+   * - `outline`: 边框按钮，透明背景带边框
+   * - `secondary`: 次要按钮，灰色背景
+   * - `ghost`: 幽灵按钮，悬停时显示背景
+   * - `link`: 链接样式按钮，带下划线
+   */
   variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
+  
+  /**
+   * 按钮的尺寸大小
+   * @defaultValue 'default'
+   * @remarks
+   * - `default`: 标准尺寸 (h-10 px-4 py-2)
+   * - `sm`: 小尺寸 (h-9 px-3)
+   * - `lg`: 大尺寸 (h-11 px-8)
+   * - `icon`: 图标按钮 (h-10 w-10)
+   */
   size?: 'default' | 'sm' | 'lg' | 'icon';
+  
+  /**
+   * 是否显示加载状态
+   * @defaultValue false
+   * @remarks 当为true时，按钮会显示旋转的加载图标并禁用点击
+   */
   loading?: boolean;
 }
 
+/**
+ * 通用按钮组件
+ * 
+ * @remarks
+ * 这是一个高度可定制的按钮组件，支持多种视觉样式、尺寸和状态。
+ * 基于Tailwind CSS构建，提供一致的设计系统。
+ * 
+ * @example
+ * 基本用法:
+ * ```tsx
+ * <Button onClick={() => console.log('clicked')}>点击我</Button>
+ * ```
+ * 
+ * @example
+ * 不同样式的按钮:
+ * ```tsx
+ * <Button variant="default">主要按钮</Button>
+ * <Button variant="destructive">删除按钮</Button>
+ * <Button variant="outline">边框按钮</Button>
+ * <Button variant="secondary">次要按钮</Button>
+ * <Button variant="ghost">幽灵按钮</Button>
+ * <Button variant="link">链接按钮</Button>
+ * ```
+ * 
+ * @example
+ * 不同尺寸的按钮:
+ * ```tsx
+ * <Button size="sm">小按钮</Button>
+ * <Button size="default">标准按钮</Button>
+ * <Button size="lg">大按钮</Button>
+ * <Button size="icon"><Icon /></Button>
+ * ```
+ * 
+ * @example
+ * 加载状态:
+ * ```tsx
+ * <Button loading={true}>加载中...</Button>
+ * ```
+ * 
+ * @param props - 按钮组件的属性
+ * @returns 渲染的按钮元素
+ * 
+ * @public
+ */
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = 'default', size = 'default', loading = false, disabled, children, ...props }, ref) => {
     return (
@@ -61,6 +136,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   }
 );
 
+/**
+ * 设置组件的显示名称，用于React开发工具调试
+ */
 Button.displayName = 'Button';
 
 export { Button };

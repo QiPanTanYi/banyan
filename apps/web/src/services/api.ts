@@ -1,19 +1,54 @@
+/**
+ * @fileoverview API服务模块 - 提供统一的HTTP请求接口和错误处理
+ * 
+ * 该模块封装了axios实例，提供了：
+ * - 统一的请求/响应拦截器
+ * - 自动token认证
+ * - 请求耗时统计
+ * - 错误状态码处理
+ * - 文件上传功能
+ * 
+ * @author Banyan Team
+ * @version 1.0.0
+ */
+
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { useAuthStore } from '../stores/authStore';
 
-// 扩展 AxiosRequestConfig 以包含 metadata
+/**
+ * 扩展 AxiosRequestConfig 以包含请求元数据
+ * 用于记录请求开始时间，计算请求耗时
+ */
 declare module 'axios' {
   interface InternalAxiosRequestConfig {
+    /** 请求元数据 */
     metadata?: {
+      /** 请求开始时间 */
       startTime: Date;
     };
   }
 }
 
-// API基础配置
+/** API基础URL，从环境变量获取或使用默认值 */
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
 
-// 创建axios实例
+/**
+ * 创建配置好的axios实例
+ * 
+ * 配置包括：
+ * - 基础URL和超时时间
+ * - 默认请求头
+ * - 请求/响应拦截器
+ * 
+ * @example
+ * ```typescript
+ * // 直接使用apiClient
+ * const response = await apiClient.get('/users');
+ * 
+ * // 或使用封装的api对象
+ * const users = await api.get('/users');
+ * ```
+ */
 const apiClient: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
   timeout: 10000,
@@ -95,43 +130,151 @@ apiClient.interceptors.response.use(
   }
 );
 
-// API响应包装器
+/**
+ * API响应数据结构
+ * 
+ * 统一的API响应格式，所有后端接口都应该返回这种格式
+ * 
+ * @template T - 响应数据的类型
+ * 
+ * @example
+ * ```typescript
+ * interface User {
+ *   id: string;
+ *   name: string;
+ * }
+ * 
+ * const response: ApiResponse<User[]> = {
+ *   success: true,
+ *   data: [{ id: '1', name: 'John' }],
+ *   message: '获取用户列表成功',
+ *   code: 200
+ * };
+ * ```
+ */
 export interface ApiResponse<T = any> {
+  /** 请求是否成功 */
   success: boolean;
+  /** 响应数据 */
   data: T;
+  /** 响应消息 */
   message: string;
+  /** 响应状态码 */
   code: number;
 }
 
-// 通用API请求方法
+/**
+ * 通用API请求方法集合
+ * 
+ * 提供了常用的HTTP方法封装，自动处理响应数据提取
+ * 所有方法都会自动添加认证token和错误处理
+ * 
+ * @example
+ * ```typescript
+ * // GET请求
+ * const users = await api.get<User[]>('/users');
+ * 
+ * // POST请求
+ * const newUser = await api.post<User>('/users', { name: 'John' });
+ * 
+ * // PUT请求
+ * const updatedUser = await api.put<User>('/users/1', { name: 'Jane' });
+ * 
+ * // DELETE请求
+ * await api.delete('/users/1');
+ * ```
+ */
 export const api = {
-  // GET请求
+  /**
+   * 发送GET请求
+   * 
+   * @template T - 响应数据类型
+   * @param url - 请求URL
+   * @param config - axios请求配置
+   * @returns Promise包装的响应数据
+   */
   get: <T = any>(url: string, config?: AxiosRequestConfig): Promise<T> => {
     return apiClient.get(url, config).then(response => response.data);
   },
   
-  // POST请求
+  /**
+   * 发送POST请求
+   * 
+   * @template T - 响应数据类型
+   * @param url - 请求URL
+   * @param data - 请求体数据
+   * @param config - axios请求配置
+   * @returns Promise包装的响应数据
+   */
   post: <T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> => {
     return apiClient.post(url, data, config).then(response => response.data);
   },
   
-  // PUT请求
+  /**
+   * 发送PUT请求
+   * 
+   * @template T - 响应数据类型
+   * @param url - 请求URL
+   * @param data - 请求体数据
+   * @param config - axios请求配置
+   * @returns Promise包装的响应数据
+   */
   put: <T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> => {
     return apiClient.put(url, data, config).then(response => response.data);
   },
   
-  // DELETE请求
+  /**
+   * 发送DELETE请求
+   * 
+   * @template T - 响应数据类型
+   * @param url - 请求URL
+   * @param config - axios请求配置
+   * @returns Promise包装的响应数据
+   */
   delete: <T = any>(url: string, config?: AxiosRequestConfig): Promise<T> => {
     return apiClient.delete(url, config).then(response => response.data);
   },
   
-  // PATCH请求
+  /**
+   * 发送PATCH请求
+   * 
+   * @template T - 响应数据类型
+   * @param url - 请求URL
+   * @param data - 请求体数据
+   * @param config - axios请求配置
+   * @returns Promise包装的响应数据
+   */
   patch: <T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> => {
     return apiClient.patch(url, data, config).then(response => response.data);
   },
 };
 
-// 文件上传
+/**
+ * 文件上传功能
+ * 
+ * 支持单文件上传，并提供上传进度回调
+ * 
+ * @param file - 要上传的文件对象
+ * @param onProgress - 上传进度回调函数，参数为进度百分比(0-100)
+ * @returns Promise包装的上传结果，包含文件URL
+ * 
+ * @example
+ * ```typescript
+ * const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+ * const file = fileInput.files?.[0];
+ * 
+ * if (file) {
+ *   try {
+ *     const result = await uploadFile(file, (progress) => {
+ *       console.log(`上传进度: ${progress}%`);
+ *     });
+ *     console.log('文件上传成功:', result.data.url);
+ *   } catch (error) {
+ *     console.error('文件上传失败:', error);
+ *   }
+ * }
+ * ```
+ */
 export const uploadFile = (file: File, onProgress?: (progress: number) => void): Promise<ApiResponse<{ url: string }>> => {
   const formData = new FormData();
   formData.append('file', file);

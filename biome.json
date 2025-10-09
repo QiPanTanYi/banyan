@@ -1,37 +1,95 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.4.1/schema.json",
-  "organizeImports": {
-    "enabled": true
+  "$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
   },
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
-    }
+      "recommended": true,
+      "style": {
+        "noNonNullAssertion": "off",
+        "useImportType": "off"
+      },
+      "suspicious": {
+        "noExplicitAny": "off",
+        "noArrayIndexKey": "off"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "off"
+      },
+      "complexity": {
+        "noBannedTypes": "off"
+      }
+    },
+    "includes": [
+      "**",
+      "!**/*.json",
+      "!**/node_modules/**/*",
+      "!**/dist/**/*",
+      "!**/build/**/*",
+      "!**/.turbo/**/*",
+      "!**/.next/**/*"
+    ]
   },
   "formatter": {
     "enabled": true,
     "formatWithErrors": false,
     "indentStyle": "space",
     "indentWidth": 2,
+    "lineEnding": "lf",
     "lineWidth": 80,
-    "lineEnding": "lf"
+    "attributePosition": "auto"
   },
   "javascript": {
     "formatter": {
-      "jsxQuoteStyle": "double",
+      "jsxQuoteStyle": "single",
       "quoteProperties": "asNeeded",
-      "trailingComma": "es5",
-      "semicolons": "asNeeded",
-      "arrowParentheses": "always",
+      "trailingCommas": "es5",
+      "semicolons": "always",
+      "arrowParentheses": "asNeeded",
       "bracketSpacing": true,
       "bracketSameLine": false,
       "quoteStyle": "single",
       "attributePosition": "auto"
+    },
+    "parser": {
+      "unsafeParameterDecoratorsEnabled": true
+    }
+  },
+  "json": {
+    "formatter": {
+      "enabled": true
+    },
+    "parser": {
+      "allowComments": true
+    }
+  },
+  "css": {
+    "formatter": {
+      "enabled": true,
+      "indentStyle": "space",
+      "indentWidth": 2,
+      "lineWidth": 80
+    },
+    "linter": {
+      "enabled": true
     }
   },
   "files": {
-    "include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "**/*.json"],
-    "ignore": ["node_modules/**", "dist/**", "build/**", ".next/**"]
+    "includes": [
+      "apps/**/*.{js,jsx,ts,tsx,css,scss,json}",
+      "*.{js,jsx,ts,tsx,json}"
+    ],
+    "ignoreUnknown": false
+  },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
   }
 }

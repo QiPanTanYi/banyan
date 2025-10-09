@@ -1,0 +1,94 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "name": "Banyan 项目文档",
+  "entryPoints": [
+    "./apps/web/src"
+  ],
+  "entryPointStrategy": "expand",
+  "out": "./docs",
+  "exclude": [
+    "**/node_modules/**",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "**/dist/**",
+    "**/build/**",
+    "**/.next/**"
+  ],
+  "tsconfig": "./apps/web/tsconfig.json",
+  "skipErrorChecking": true,
+  "theme": "default",
+  "includeVersion": true,
+  "excludePrivate": false,
+  "excludeProtected": false,
+  "excludeExternals": true,
+  "readme": "./docs/README.md",
+  "plugin": [
+    "typedoc-plugin-markdown"
+  ],
+  "gitRevision": "main",
+  "gitRemote": "origin",
+  "hideGenerator": false,
+  "searchInComments": true,
+  "cleanOutputDir": true,
+  "treatWarningsAsErrors": false,
+  "validation": {
+    "notExported": true,
+    "invalidLink": true,
+    "notDocumented": false
+  },
+  "categorizeByGroup": true,
+  "defaultCategory": "其他",
+  "categoryOrder": [
+    "组件",
+    "工具函数",
+    "服务",
+    "类型定义",
+    "Hooks",
+    "其他"
+  ],
+  "sort": [
+    "source-order"
+  ],
+  "kindSortOrder": [
+    "Document",
+    "Project",
+    "Module",
+    "Namespace",
+    "Enum",
+    "EnumMember",
+    "Class",
+    "Interface",
+    "TypeAlias",
+    "Constructor",
+    "Property",
+    "Variable",
+    "Function",
+    "Accessor",
+    "Method",
+    "Parameter",
+    "TypeParameter",
+    "TypeLiteral",
+    "CallSignature",
+    "ConstructorSignature",
+    "IndexSignature",
+    "GetSignature",
+    "SetSignature"
+  ],
+  "navigationLinks": {
+    "项目首页": "https://github.com/banyan-team/banyan",
+    "API 文档": "./docs/index.html"
+  },
+  "sidebarLinks": {
+    "GitHub": "https://github.com/banyan-team/banyan",
+    "问题反馈": "https://github.com/banyan-team/banyan/issues"
+  },
+  "titleLink": "https://github.com/banyan-team/banyan",
+  "customCss": "./custom.css",
+  "markdownItOptions": {
+    "html": true,
+    "linkify": true,
+    "typographer": true
+  }
+}
